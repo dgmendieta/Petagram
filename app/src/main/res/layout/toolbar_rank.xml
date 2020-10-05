@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rank_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:background="@color/colorPrimary"
+    android:elevation="4dp">
+
+
+
+    <ImageView
+        android:id="@+id/image_rank_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icons8_impresi_n_de_la_pata_del_perro_64" />
+
+    <TextView
+        android:id="@+id/title_rank_toolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="@color/colorAccent"
+        android:textSize="30dp"
+        android:textStyle="italic"
+        app:fontFamily="@font/light_italic" />
+
+
+
+</androidx.appcompat.widget.Toolbar>
