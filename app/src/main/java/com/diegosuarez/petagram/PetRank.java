@@ -1,58 +1,89 @@
 package com.diegosuarez.petagram;
 
-import android.os.Build;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import androidx.annotation.RequiresApi;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
+import com.diegosuarez.petagram.Adapters.PageAdapter;
+import com.diegosuarez.petagram.Fragments.ProfileFragment;
+import com.diegosuarez.petagram.Fragments.RecyclerViewFragment;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
-public class PetRank extends AppCompatActivity {
+public class PetRank extends AppCompatActivity implements RecyclerViewFragment.OnFragmentInteractionListener {
 
-    ArrayList pets;
-    RecyclerView petsList;
-    ImageButton backBtn;
-    Toolbar rankToolBar;
-
-
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
+    private Toolbar toolbar;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_rank);
 
-        rankToolBar = (Toolbar) findViewById(R.id.rank_toolbar);
-        setSupportActionBar(rankToolBar);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeAsUpIndicator(R.drawable.icons8_chevron_izquierda_en_c_rculo_64);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        setUpViewPager();
+        Toolbar miActionBar = (Toolbar) findViewById(R.id.miActionBar);
 
-
-
-
-        petsList = (RecyclerView) findViewById(R.id.rank_recyclerview);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setOrientation(LinearLayoutManager.VERTICAL);
-
-        petsList.setLayoutManager(manager);
-        petPopulator();
-        initAdapter();
+        setSupportActionBar(miActionBar);
 
     }
-    public void initAdapter(){
-        PetAdapter adapter = new PetAdapter(pets);
-        petsList.setAdapter(adapter);
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.itemFav:
+                Intent intent = new Intent(PetRank.this, BestRankPets.class);
+                startActivity(intent);
+                break;
+            case R.id.itemAbout:
+                Intent intentAbout = new Intent(PetRank.this, AboutActivity.class);
+                startActivity(intentAbout);
+                break;
+            case R.id.itemContact:
+                Intent intentContact = new Intent(PetRank.this, ContactActivity.class);
+                startActivity(intentContact);
+
+                break;
+
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
-    public void petPopulator(){
-        pets = new ArrayList<Pet>();
-        pets.add(new Pet("Anahí", R.drawable.anahisalgado2_thumb, "3"));
-        pets.add(new Pet("Aldo", R.drawable.tldlj9a, "4"));
-        pets.add(new Pet("Sr UML", R.drawable.images, "1"));
-        pets.add(new Pet("Javita", R.drawable.java_logo_640, "5"));
-        pets.add(new Pet("Android", R.drawable.android_el_sistema_operativo_movil_de_google, "4"));
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private ArrayList<Fragment> setFragments(){
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        fragments.add(new RecyclerViewFragment());
+        fragments.add(new ProfileFragment());
+        return fragments;
+    }
+    private void setUpViewPager(){
+
+        viewPager.setAdapter(new PageAdapter(getSupportFragmentManager(), setFragments()));
+        tabLayout.setupWithViewPager((viewPager));
+        tabLayout.getTabAt(0).setIcon(R.drawable.icons8_cucha_48);
+        tabLayout.getTabAt(1).setIcon(R.drawable.icons8_impresi_n_de_la_pata_del_perro_64);
+    }
+
+
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

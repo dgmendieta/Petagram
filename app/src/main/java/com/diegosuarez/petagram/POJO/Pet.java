@@ -1,19 +1,29 @@
-package com.diegosuarez.petagram;
+package com.diegosuarez.petagram.POJO;
 
 public class Pet {
 
     //Global Variables
+    private int id;
     private String name;
     private int photo;
-    private String rank;
+    private int rank;
 
     //Constructor
-    public Pet(String name, int photo, String rank) {
+    public Pet() {
+
+    }
+
+    public Pet(String name, int photo, int rank) {
         this.name = name;
         this.photo = photo;
         this.rank = rank;
     }
     //Getters and Setters
+
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public String getName() {
         return name;
@@ -31,11 +41,11 @@ public class Pet {
         this.photo = photo;
     }
 
-    public String getRank() {
+    public int getRank() {
         return rank;
     }
 
-    public void setRank(String rank) {
+    public void setRank(int rank) {
         this.rank = rank;
     }
 }
